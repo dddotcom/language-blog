@@ -1,0 +1,27 @@
+.hint-text {
+    position: absolute;
+    bottom: 0px;
+    margin: 5px;
+    padding: 0 10px;
+  }
+  
+  .hint-text:hover {
+    background-color: rgba(255,255,255, 0.25);
+  }
+  
+  .hint-text > p {
+    margin-bottom: 0;
+    line-height: 55px;
+  }
+
+.hint-text:hover > p > span.give-up {
+     display: none;
+}
+  
+  .hint-text > p > span.the-answer{
+     visibility: hidden;
+  }
+  
+  .hint-text:hover > p > span.the-answer {
+    visibility: visible;
+  }
