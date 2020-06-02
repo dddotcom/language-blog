@@ -25,3 +25,8 @@
   .hint-text:hover > p > span.the-answer {
     visibility: visible;
   }
+
+.puto-card {
+  height: 100px;
+  margin-bottom: 10px;
+}
