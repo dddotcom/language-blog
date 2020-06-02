@@ -1,5 +1,6 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap'
+import { Link, NavLink, withRouter } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -9,14 +10,14 @@ const Navbar = () => {
         onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
         >
         <Nav.Item>
-            <Nav.Link href="/home">Home</Nav.Link>
+            <NavLink className="nav-link" to="/">Home</NavLink>
         </Nav.Item>
         <Nav.Item>
-            <Nav.Link eventKey="link-1">Tagalog</Nav.Link>
+            <NavLink className="nav-link" to="/practice">Practice</NavLink>
         </Nav.Item>
-        <Nav.Item>
-            <Nav.Link eventKey="link-2">Japanese</Nav.Link>
-        </Nav.Item>
+        {/* <Nav.Item>
+            <NavLink className="nav-link" to="/list">List</NavLink>
+        </Nav.Item> */}
         </Nav>
     )
 }

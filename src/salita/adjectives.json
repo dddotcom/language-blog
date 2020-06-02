@@ -1,0 +1,13 @@
+[
+    { "type": "adjective", "tagalog": "basa", "english": "wet", "tagalogSentence": "Basang aso. ", "englishSentence": "Wet dog."},
+    { "type": "adjective", "tagalog": "bago", "english": "new", "tagalogSentence": "Bagong damit.", "englishSentence": "New clothing."},
+    { "type": "adjective", "tagalog": "bukas", "english": "open", "tagalogSentence": "Bukas na tindihan ", "englishSentence": "Open store"},
+    { "type": "adjective", "tagalog": "galit", "english": "angry", "tagalogSentence": "Galit na nanay. ", "englishSentence": "Angry mom."},
+    { "type": "adjective", "tagalog": "gutom", "english": "hungry", "tagalogSentence": "Gutom na mga bata. ", "englishSentence": "Hungry children."},
+    { "type": "adjective", "tagalog": "lasing", "english": "drunk", "tagalogSentence": "Lasing na tito. ", "englishSentence": "Drunk tito."},    
+    { "type": "adjective", "tagalog": "luma", "english": "old", "tagalogSentence": "Bagong damit.", "englishSentence": "New clothing."},
+    { "type": "adjective", "tagalog": "mababa", "english": "low", "tagalogSentence": "Bukas na tindihan ", "englishSentence": "Open store"},
+    { "type": "adjective", "tagalog": "mabait", "english": "good", "tagalogSentence": "Galit na nanay. ", "englishSentence": "Angry mom."},
+    { "type": "adjective", "tagalog": "mabigat", "english": "heavy", "tagalogSentence": "Gutom na mga bata. ", "englishSentence": "Hungry children."},
+    { "type": "adjective", "tagalog": "mabilis", "english": "fast", "tagalogSentence": "Lasing na tito. ", "englishSentence": "Drunk tito."}
+]

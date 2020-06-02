@@ -15,3 +15,18 @@ body {
   -ms-user-select: none;      /* IE 10+ */
   user-select: none; 
 }
+
+.practice-menu > .breadcrumb-style {
+  width: 36rem;
+}
+
+.toggle-language {
+  cursor: pointer; 
+  border-radius: 5px;
+  width: fit-content;
+  background-color: rgba(0,0,255,0.30);
+}
+
+.toggle-language:hover {
+  background-color: rgba(0,0,0,0.15);
+}
