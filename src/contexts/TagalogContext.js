@@ -33,8 +33,13 @@ export const TagalogContextProvider = (props) => {
     }
 
     useEffect(() => {
-        getVerbs();
-        getAdjectives();
+        const asyncFn = async() => {
+            await getVerbs();
+            await getAdjectives();
+        }
+        
+        asyncFn();
+        return;
     }, [])
 
     return (
