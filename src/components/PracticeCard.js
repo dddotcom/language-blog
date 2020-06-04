@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Card, Form } from 'react-bootstrap'
+import React, { useState, useEffect } from 'react';
+import { Card, Form, Row, Col } from 'react-bootstrap'
 import './PracticeCard.css'
 import Puto from '../origputo.png'
 import UbePuto from '../ubeputo.png'
@@ -32,11 +32,16 @@ export const PracticeCard = (props) => {
             props.updateCurrentCardIndex(true);
         } else {
             setCardColor("danger");
+            // TODO: show the correct answer? 
             await resetCard(form);
             randomPuto();
             props.updateCurrentCardIndex(false);
         }
     }
+
+    useEffect(() => {
+        randomPuto();
+    }, [])
 
     const randomPuto = () => {
         // change puto color
@@ -59,8 +64,10 @@ export const PracticeCard = (props) => {
                     </Card.Title>
                     {/* <Card.Text>{props.sentence}</Card.Text> */}
                     <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="translation">
-                        <Form.Control autoFocus type="text" placeholder="Enter translation" />
+                    <Form.Group as={Row} controlId="translation">
+                        <Col md={{ span: 6, offset: 3 }}>
+                            <Form.Control autoFocus type="text" placeholder="Enter translation" size="lg" className="text-center"/>
+                        </Col>
                     </Form.Group>
                     </Form>
                     <div className="hint-text">
