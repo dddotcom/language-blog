@@ -12,7 +12,7 @@ export const TagalogContextProvider = (props) => {
     const [nouns, setNouns] = useState([]);
     const [grammar, setGrammar] = useState([]);
 
-    const stall = async(stallTime = 2000) => {
+    const stall = async(stallTime = 200) => {
         await new Promise(resolve => setTimeout(resolve, stallTime));
     }
     const getAdjectives = async () => {
@@ -20,6 +20,10 @@ export const TagalogContextProvider = (props) => {
         // TODO: return the array in randomized order
         let adj = adjectivesJson.default.slice(0,3);
         setAdjectives(adj);
+    }
+
+    const getAdjectivesBySet = (setName) => {
+        return adjectivesJson.default.filter(adj => adj.type === setName);
     }
     
     const getVerbs = async () => {
@@ -53,7 +57,7 @@ export const TagalogContextProvider = (props) => {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <TagalogContext.Provider value={{adjectives, verbs}}>
+        <TagalogContext.Provider value={{adjectives, verbs, getAdjectivesBySet}}>
             {props.children}
         </TagalogContext.Provider>
     )

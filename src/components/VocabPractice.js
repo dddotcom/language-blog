@@ -13,14 +13,14 @@ import _ from 'lodash';
 // verb conjugation
 
 export const VocabPractice = (props) => {
-    const { adjectives, verbs } = useContext(TagalogContext)
+    const { adjectives, verbs, getAdjectivesBySet } = useContext(TagalogContext)
     const [currentCard, setCurrentCard] = useState({});
     const [currentCardIndex, setCurrentCardIndex] = useState(-1);
     const [cards, setCards] = useState([]);
     const [cardsGuessedCorrect, setCardsGuessedCorrect] = useState([]);
     const [answerStats, setAnswerStats] = useState({})
     const [viewTagalog, setViewTagalog] = useState(true);
-    const [cardType, setCardType] = useState('');
+    const [cardType, setCardType] = useState('adjectiveI');
 
     const updateCurrentCardIndex = (removeFromList) => {
         removeCardFromList(removeFromList);
@@ -55,7 +55,7 @@ export const VocabPractice = (props) => {
     }
 
     useEffect(() => {
-        setCardTypeToView('adjective')
+        setCardTypeToView('adjectiveI')
     }, [adjectives]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const setCardTypeToView = (cardType) => {
@@ -70,9 +70,17 @@ export const VocabPractice = (props) => {
                 setCurrentCardIndex(0);
                 setCurrentCard(newCards[0]);
                 break;
-            case 'adjective': 
+            case 'adjectiveI': 
                 if (adjectives.length) {
-                    newCards = _.cloneDeep(adjectives);
+                    newCards = _.cloneDeep(getAdjectivesBySet(cardType));
+                }
+                setCards(newCards);
+                setCurrentCardIndex(0);
+                setCurrentCard(newCards[0]);
+                break;
+            case 'adjectiveII': 
+                if (adjectives.length) {
+                    newCards = _.cloneDeep(getAdjectivesBySet(cardType));
                 }
                 setCards(newCards);
                 setCurrentCardIndex(0);
@@ -127,7 +135,13 @@ export const VocabPractice = (props) => {
                 {viewTagalog ? 'Tagalog -> English' : 'English -> Tagalog'}</p>
             <Breadcrumb className="breadcrumb-style m-auto">
                 <Breadcrumb.Item  active={cardType==='verb'} onClick={() => setCardTypeToView('verb')}>Verbs</Breadcrumb.Item>
-                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives</Breadcrumb.Item>
+                <Breadcrumb.Item active={cardType === 'adjectiveI'}  onClick={() => setCardTypeToView('adjectiveI')}>Adjectives I</Breadcrumb.Item>
+                <Breadcrumb.Item active={cardType === 'adjectiveII'}  onClick={() => setCardTypeToView('adjectiveII')}>Adjectives II</Breadcrumb.Item>
+                {/* <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives III</Breadcrumb.Item>
+                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives IV</Breadcrumb.Item>
+                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives V</Breadcrumb.Item>
+                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives VI</Breadcrumb.Item>
+                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives VII</Breadcrumb.Item> */}
             </Breadcrumb>
         </div>
         { cardsGuessedCorrect.length !== cards.length ? (
