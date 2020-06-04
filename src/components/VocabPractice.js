@@ -86,6 +86,9 @@ export const VocabPractice = (props) => {
                 setCurrentCardIndex(0);
                 setCurrentCard(newCards[0]);
         } 
+
+        setAnswerStats({});
+        setCardsGuessedCorrect([]);
     }
 
     const removeCardFromList = (removeFromList) => {
@@ -114,8 +117,6 @@ export const VocabPractice = (props) => {
 
     const reset = () => {
         setCardTypeToView(cardType);
-        setAnswerStats({});
-        setCardsGuessedCorrect([]);
     }
 
     return cards.length && currentCard ? 
