@@ -5,7 +5,7 @@ export const Home = (props) => {
     return (
         <div className="text-center">
             <h1>Anak ng puto!</h1>
-            <img src={Puto} />
+            <img src={Puto} alt="puto" />
             <p>Masasarap ang mga puto, di ba?!</p>
             <p>may original, may buko pandan, may ube...gutom na ako</p>
         </div>

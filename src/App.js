@@ -4,7 +4,7 @@ import { VocabPractice } from './components/VocabPractice';
 import { Home } from './components/Home';
 import { VocabList } from './components/VocabList';
 import Navbar from './components/Navbar';
-import { BroswerRouter, Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (

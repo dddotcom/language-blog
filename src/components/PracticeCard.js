@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Form, Button } from 'react-bootstrap'
+import { Card, Form } from 'react-bootstrap'
 import './PracticeCard.css'
 import Puto from '../origputo.png'
 import UbePuto from '../ubeputo.png'
@@ -28,14 +28,20 @@ export const PracticeCard = (props) => {
         if (userTranslation.toLowerCase() === props.translation) {
             setCardColor("success");
             await resetCard(form);
-            // change puto color
-            const newFlavor = flavors[Math.floor(Math.random() * Math.floor(3))]
-            setPutoFlavor(newFlavor);
-            props.updateCurrentCardIndex();
+            randomPuto();
+            props.updateCurrentCardIndex(true);
         } else {
             setCardColor("danger");
             await resetCard(form);
+            randomPuto();
+            props.updateCurrentCardIndex(false);
         }
+    }
+
+    const randomPuto = () => {
+        // change puto color
+        const newFlavor = flavors[Math.floor(Math.random() * Math.floor(3))]
+        setPutoFlavor(newFlavor);
     }
 
     return (
@@ -45,16 +51,16 @@ export const PracticeCard = (props) => {
             style={{ width: '36rem', height: '24rem' }}>
                 <Card.Header>{props.type}</Card.Header>
                 <Card.Body>
-                    { putoFlavor === 'Puto' ? (<span><small>Original!</small><br/><img className="puto-card" src={Puto} title="masarap na puto original"/></span>): null }
-                    { putoFlavor === 'UbePuto' ? (<span><small>Ube my favorite!</small><br/><img className="puto-card" src={UbePuto} title="masarap na putong ube"/></span>): null }
-                    { putoFlavor === 'PandanPuto' ? (<span><small>Pandan, how fresh!</small><br/><img className="puto-card" src={PandanPuto} title="masarap na puto pandan"/></span>): null }
+                    { putoFlavor === 'Puto' ? (<span><small>Original!</small><br/><img className="puto-card" src={Puto} alt="masarap na puto original" title="masarap na puto original"/></span>): null }
+                    { putoFlavor === 'UbePuto' ? (<span><small>Ube my favorite!</small><br/><img className="puto-card" alt="masarap na putong ube" src={UbePuto} title="masarap na putong ube"/></span>): null }
+                    { putoFlavor === 'PandanPuto' ? (<span><small>Pandan, how fresh!</small><br/><img className="puto-card" alt="masarap na puto pandan" src={PandanPuto} title="masarap na puto pandan"/></span>): null }
                     <Card.Title>
                         <h1>{props.word}</h1>
                     </Card.Title>
                     {/* <Card.Text>{props.sentence}</Card.Text> */}
                     <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="translation">
-                        <Form.Control type="text" placeholder="Enter translation" />
+                        <Form.Control autoFocus type="text" placeholder="Enter translation" />
                     </Form.Group>
                     </Form>
                     <div className="hint-text">

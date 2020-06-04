@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Form, Button } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 
 export const VocabCard = (props) => {
     const [isFlipped, setIsFlipped] = useState(false)

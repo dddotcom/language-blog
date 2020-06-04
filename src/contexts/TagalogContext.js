@@ -17,7 +17,8 @@ export const TagalogContextProvider = (props) => {
     }
     const getAdjectives = async () => {
         await stall();
-        let adj = adjectivesJson.default;
+        // TODO: return the array in randomized order
+        let adj = adjectivesJson.default.slice(0,3);
         setAdjectives(adj);
     }
     
@@ -49,7 +50,7 @@ export const TagalogContextProvider = (props) => {
         
         asyncFn();
         return;
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <TagalogContext.Provider value={{adjectives, verbs}}>

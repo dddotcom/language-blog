@@ -1,18 +1,31 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { TagalogContext } from '../contexts/TagalogContext';
 import { PracticeCard } from './PracticeCard';
+import { AnswerStats } from './AnswerStats';
 import { Button, Breadcrumb} from 'react-bootstrap'
 import _ from 'lodash';
+
+// TODO: RANDOMIZE the vocab, 
+// wrong shuffle back into random spot (manual override and 3 times try)
+// session --> 
+// save current state in local storage
+// show progress bar?
+// verb conjugation
 
 export const VocabPractice = (props) => {
     const { adjectives, verbs } = useContext(TagalogContext)
     const [currentCard, setCurrentCard] = useState({});
     const [currentCardIndex, setCurrentCardIndex] = useState(-1);
     const [cards, setCards] = useState([]);
+    const [cardsGuessedCorrect, setCardsGuessedCorrect] = useState([]);
+    const [answerStats, setAnswerStats] = useState({})
     const [viewTagalog, setViewTagalog] = useState(true);
     const [cardType, setCardType] = useState('');
 
-    const updateCurrentCardIndex = () => {
+    const updateCurrentCardIndex = (removeFromList) => {
+        removeCardFromList(removeFromList);
+        updateAnswerStats(removeFromList);
+
         let index = currentCardIndex
         if (index === cards.length -1) {
             // loop back
@@ -20,12 +33,30 @@ export const VocabPractice = (props) => {
         } else {
             index++
         }
+
+        // set current card
+        let newCurrentCard = cards[index];
+        // TODO is here a better way to set index without looping through entire array to find the next
+        // good index?
+        while(newCurrentCard.removeFromList 
+            && ((removeFromList ? cardsGuessedCorrect.length + 1 : cardsGuessedCorrect.length) < cards.length)
+        ) {
+            if (index === cards.length -1) {
+                // loop back
+                index = 0;
+            } else {
+                index++
+            }
+            newCurrentCard = cards[index];
+        }
+
         setCurrentCardIndex(index)
-        setCurrentCard(cards[index]);
+        setCurrentCard(newCurrentCard);
     }
+
     useEffect(() => {
         setCardTypeToView('adjective')
-    }, [adjectives])
+    }, [adjectives]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const setCardTypeToView = (cardType) => {
         let newCards = [];
@@ -33,7 +64,7 @@ export const VocabPractice = (props) => {
         switch (cardType) {
             case 'verb': 
                 if (verbs.length) {
-                    newCards = newCards.concat(verbs);
+                    newCards = _.cloneDeep(verbs);
                 }
                 setCards(newCards);
                 setCurrentCardIndex(0);
@@ -41,7 +72,7 @@ export const VocabPractice = (props) => {
                 break;
             case 'adjective': 
                 if (adjectives.length) {
-                    newCards = newCards.concat(adjectives);
+                    newCards = _.cloneDeep(adjectives);
                 }
                 setCards(newCards);
                 setCurrentCardIndex(0);
@@ -57,6 +88,36 @@ export const VocabPractice = (props) => {
         } 
     }
 
+    const removeCardFromList = (removeFromList) => {
+        //set correct state
+        currentCard.removeFromList = removeFromList;
+        if (removeFromList) {
+            const correctCards = _.cloneDeep(cardsGuessedCorrect);
+            correctCards.push(_.cloneDeep(currentCard));
+            setCardsGuessedCorrect(correctCards)
+        }
+    }
+
+    const updateAnswerStats = (removeFromList) => {
+        // set answer stats
+        if (!removeFromList) {
+            const key = `${currentCard.tagalog}=${currentCard.english}`
+            const newAnswerStats = _.cloneDeep(answerStats);
+            if (newAnswerStats.hasOwnProperty(key)) {
+                    newAnswerStats[key]++;
+            } else {
+                newAnswerStats[key] = 1;
+            }
+            setAnswerStats(newAnswerStats);
+        }
+    }
+
+    const reset = () => {
+        setCardTypeToView(cardType);
+        setAnswerStats({});
+        setCardsGuessedCorrect([]);
+    }
+
     return cards.length && currentCard ? 
     (<div className="text-center mt-5">
         <h1>Vocab Practice</h1>
@@ -68,14 +129,31 @@ export const VocabPractice = (props) => {
                 <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives</Breadcrumb.Item>
             </Breadcrumb>
         </div>
-        <PracticeCard  word={viewTagalog ? currentCard.tagalog : currentCard.english} 
-        translation={viewTagalog ? currentCard.english : currentCard.tagalog}
-            sentence={viewTagalog ? currentCard.tagalogSentence : currentCard.englishSentence} 
-            updateCurrentCardIndex = {updateCurrentCardIndex}
-            type={_.startCase(currentCard.type)}/>
-        <Button variant="primary" onClick={() => updateCurrentCardIndex()}>Next</Button>
+        { cardsGuessedCorrect.length !== cards.length ? (
+            <div>
+
+                { cards.map(card => {
+                    return (
+                        (card.removeFromList || (card.tagalog !== currentCard.tagalog) ) ? (undefined) : (
+                            <PracticeCard key={card.tagalog}  word={viewTagalog ? card.tagalog : card.english} 
+                            translation={viewTagalog ? card.english : card.tagalog}
+                            sentence={viewTagalog ? card.tagalogSentence : card.englishSentence} 
+                            updateCurrentCardIndex = {updateCurrentCardIndex}
+                            type={_.startCase(card.type)}/>
+                        )
+                    )
+                })}
+            </div>
+        ) : (
+        <div>
+            <p>Congrats! Done with vocab Set!</p>
+            <AnswerStats answerStats={answerStats} />
+            <Button onClick={reset}>Practice Again</Button>
+        </div>) }
         <hr />
-        <p> Showing {currentCardIndex+1} / {cards.length} </p>
+        {cardsGuessedCorrect.length !== cards.length ? (
+            <p> {cards.length - cardsGuessedCorrect.length} Cards Left</p>
+        ) : (undefined)}
     </div>) : 
     (
         <div className="text-center mt-5">

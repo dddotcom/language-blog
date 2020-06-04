@@ -26,7 +26,7 @@ export const VocabList = (props) => {
             newCards = newCards.concat(adjectives);
             setCards(newCards);
         }
-    }, [adjectives])
+    }, [adjectives]) // eslint-disable-line react-hooks/exhaustive-deps
     
     useEffect(() => {
         if (verbs.length) {
@@ -34,7 +34,7 @@ export const VocabList = (props) => {
             newCards = newCards.concat(verbs);
             setCards(newCards);
         }
-    }, [verbs])
+    }, [verbs]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (currentCardIndex < 0) {
@@ -42,11 +42,11 @@ export const VocabList = (props) => {
                 setCurrentCardIndex(0);
             }
         }
-    }, [cards])
+    }, [cards]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCurrentCard({...cards[currentCardIndex]});
-    }, [currentCardIndex])
+    }, [currentCardIndex]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return cards.length ? (
         <div className="text-center mt-5">
