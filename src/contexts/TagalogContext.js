@@ -17,7 +17,6 @@ export const TagalogContextProvider = (props) => {
     }
     const getAdjectives = async () => {
         await stall();
-        // TODO: return the array in randomized order
         let adj = adjectivesJson.default.slice(0,3);
         setAdjectives(adj);
     }
@@ -44,6 +43,20 @@ export const TagalogContextProvider = (props) => {
         setGrammar(gmr);
     }
 
+    const shuffleCards = (cards) => {
+        // fisher yates shuffle
+        // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Fisher_and_Yates'_original_method
+        for (let i = cards.length -1; i > 0; i--) {
+            // get random number
+            const randIndex = Math.floor(Math.random() *i);
+            const temp = cards[randIndex];
+            //exchange cards[randIndex] and cards[i]
+            cards[randIndex] = cards[i];
+            cards[i] = temp;
+        }
+        return cards;
+    }
+
     useEffect(() => {
         const asyncFn = async() => {
             await getVerbs();
@@ -57,7 +70,7 @@ export const TagalogContextProvider = (props) => {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <TagalogContext.Provider value={{adjectives, verbs, getAdjectivesBySet}}>
+        <TagalogContext.Provider value={{adjectives, verbs, getAdjectivesBySet, shuffleCards}}>
             {props.children}
         </TagalogContext.Provider>
     )

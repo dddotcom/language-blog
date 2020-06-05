@@ -5,15 +5,17 @@ import { AnswerStats } from './AnswerStats';
 import { Button, Breadcrumb} from 'react-bootstrap'
 import _ from 'lodash';
 
-// TODO: RANDOMIZE the vocab, 
-// wrong shuffle back into random spot (manual override and 3 times try)
+// TODO: 
+// wrong 3 times try
 // session --> 
 // save current state in local storage
 // show progress bar?
 // verb conjugation
+// make my own list with words that i got wrong
+// see a list of all words in the app
 
 export const VocabPractice = (props) => {
-    const { adjectives, verbs, getAdjectivesBySet } = useContext(TagalogContext)
+    const { adjectives, verbs, getAdjectivesBySet, shuffleCards } = useContext(TagalogContext)
     const [currentCard, setCurrentCard] = useState({});
     const [currentCardIndex, setCurrentCardIndex] = useState(-1);
     const [cards, setCards] = useState([]);
@@ -73,28 +75,23 @@ export const VocabPractice = (props) => {
             case 'adjectiveI': 
                 if (adjectives.length) {
                     newCards = _.cloneDeep(getAdjectivesBySet(cardType));
+                    // newCards = _.cloneDeep(adjectives);
                 }
-                setCards(newCards);
-                setCurrentCardIndex(0);
-                setCurrentCard(newCards[0]);
                 break;
             case 'adjectiveII': 
                 if (adjectives.length) {
                     newCards = _.cloneDeep(getAdjectivesBySet(cardType));
                 }
-                setCards(newCards);
-                setCurrentCardIndex(0);
-                setCurrentCard(newCards[0]);
                 break;
             default:
                 // show all
                 newCards = _.cloneDeep(adjectives);
                 newCards = newCards.concat(_.cloneDeep(verbs))
-                setCards(newCards);
-                setCurrentCardIndex(0);
-                setCurrentCard(newCards[0]);
         } 
 
+        setCards(shuffleCards(newCards));
+        setCurrentCardIndex(0);
+        setCurrentCard(newCards[0]);
         setAnswerStats({});
         setCardsGuessedCorrect([]);
     }
