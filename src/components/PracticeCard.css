@@ -30,3 +30,9 @@
   height: 100px;
   margin-bottom: 10px;
 }
+
+.hidden {
+  /* TODO: FIX THIS */
+  position: absolute;
+  top: -99999px;
+}

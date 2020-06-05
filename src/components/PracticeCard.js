@@ -11,9 +11,9 @@ export const PracticeCard = (props) => {
 
     const flavors = ["Puto", "PandanPuto", "UbePuto"]
 
-    const resetCard = (form) => {
+    const resetCard = (form, timeout = 500) => {
         return new Promise(resolve => {
-            setTimeout(resolve, 1000)
+            setTimeout(resolve, timeout)
         }).then(() => {
             form.reset();
             setCardColor("dark");
@@ -24,7 +24,21 @@ export const PracticeCard = (props) => {
         event.preventDefault();
         event.stopPropagation();
         const form = event.currentTarget;
+        
+        if (cardColor === 'danger') {
+            await resetCard(form, 0);
+            randomPuto();
+            props.updateCurrentCardIndex(false);
+            return;
+        }
+
         const userTranslation = form.elements.translation.value;
+        
+        // make sure user has entered an answer
+        if (!userTranslation || userTranslation === '') {
+            return;
+        }
+
         if (userTranslation.toLowerCase() === props.translation) {
             setCardColor("success");
             await resetCard(form);
@@ -32,10 +46,6 @@ export const PracticeCard = (props) => {
             props.updateCurrentCardIndex(true);
         } else {
             setCardColor("danger");
-            // TODO: show the correct answer? 
-            await resetCard(form);
-            randomPuto();
-            props.updateCurrentCardIndex(false);
         }
     }
 
@@ -64,15 +74,29 @@ export const PracticeCard = (props) => {
                     </Card.Title>
                     {/* <Card.Text>{props.sentence}</Card.Text> */}
                     <Form onSubmit={handleSubmit}>
-                    <Form.Group as={Row} controlId="translation">
-                        <Col md={{ span: 6, offset: 3 }}>
-                            <Form.Control autoFocus type="text" placeholder="Enter translation" size="lg" className="text-center"/>
-                        </Col>
-                    </Form.Group>
+                    { cardColor === 'danger' ? (
+                        <Form.Group as={Row} controlId="translation">
+                            <Col md={{ span: 6, offset: 3 }}>
+                                <Form.Control className="hidden" type="submit"/>
+                                <h1>{props.translation}</h1>
+                            </Col>
+                        </Form.Group>
+                    ) : (
+                        <Form.Group as={Row} controlId="translation">
+                            <Col md={{ span: 6, offset: 3 }}>
+                                <Form.Control autoFocus type="text" placeholder="Enter translation" size="lg" className="text-center"/>
+                            </Col>
+                        </Form.Group>                     
+                    )}
                     </Form>
-                    <div className="hint-text">
-                    <p><span className="give-up">Give up?</span> 
-                    <span className="the-answer">The answer is: {props.translation}</span></p></div>
+
+                    { cardColor === 'danger' ? (
+                        <div className="hint-text"><p>Press ENTER to go to next card</p></div>) :(
+                        <div className="hint-text">
+                        <p><span className="give-up">Give up?</span> 
+                        <span className="the-answer">The answer is: {props.translation}</span></p></div>
+                    )}
+
                 </Card.Body>
             </Card>
         </div>

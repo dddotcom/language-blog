@@ -15,7 +15,7 @@ import _ from 'lodash';
 // see a list of all words in the app
 
 export const VocabPractice = (props) => {
-    const { adjectives, verbs, getAdjectivesBySet, shuffleCards } = useContext(TagalogContext)
+    const { adjectives, verbs, getAdjectivesBySet, shuffleCards, adjectiveSets } = useContext(TagalogContext)
     const [currentCard, setCurrentCard] = useState({});
     const [currentCardIndex, setCurrentCardIndex] = useState(-1);
     const [cards, setCards] = useState([]);
@@ -63,31 +63,24 @@ export const VocabPractice = (props) => {
     const setCardTypeToView = (cardType) => {
         let newCards = [];
         setCardType(cardType)
-        switch (cardType) {
-            case 'verb': 
-                if (verbs.length) {
-                    newCards = _.cloneDeep(verbs);
-                }
-                setCards(newCards);
-                setCurrentCardIndex(0);
-                setCurrentCard(newCards[0]);
-                break;
-            case 'adjectiveI': 
-                if (adjectives.length) {
-                    newCards = _.cloneDeep(getAdjectivesBySet(cardType));
-                    // newCards = _.cloneDeep(adjectives);
-                }
-                break;
-            case 'adjectiveII': 
-                if (adjectives.length) {
-                    newCards = _.cloneDeep(getAdjectivesBySet(cardType));
-                }
-                break;
-            default:
-                // show all
-                newCards = _.cloneDeep(adjectives);
-                newCards = newCards.concat(_.cloneDeep(verbs))
-        } 
+        if (cardType.includes('adjective')) {
+            newCards = _.cloneDeep(getAdjectivesBySet(cardType));
+        } else {
+            switch (cardType) {
+                case 'verb': 
+                    if (verbs.length) {
+                        newCards = _.cloneDeep(verbs);
+                    }
+                    setCards(newCards);
+                    setCurrentCardIndex(0);
+                    setCurrentCard(newCards[0]);
+                    break;
+                default:
+                    // show all
+                    newCards = _.cloneDeep(adjectives);
+                    newCards = newCards.concat(_.cloneDeep(verbs))
+            } 
+        }
 
         setCards(shuffleCards(newCards));
         setCurrentCardIndex(0);
@@ -132,13 +125,11 @@ export const VocabPractice = (props) => {
                 {viewTagalog ? 'Tagalog -> English' : 'English -> Tagalog'}</p>
             <Breadcrumb className="breadcrumb-style m-auto">
                 <Breadcrumb.Item  active={cardType==='verb'} onClick={() => setCardTypeToView('verb')}>Verbs</Breadcrumb.Item>
-                <Breadcrumb.Item active={cardType === 'adjectiveI'}  onClick={() => setCardTypeToView('adjectiveI')}>Adjectives I</Breadcrumb.Item>
-                <Breadcrumb.Item active={cardType === 'adjectiveII'}  onClick={() => setCardTypeToView('adjectiveII')}>Adjectives II</Breadcrumb.Item>
-                {/* <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives III</Breadcrumb.Item>
-                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives IV</Breadcrumb.Item>
-                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives V</Breadcrumb.Item>
-                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives VI</Breadcrumb.Item>
-                <Breadcrumb.Item active={cardType === 'adjective'}  onClick={() => setCardTypeToView('adjective')}>Adjectives VII</Breadcrumb.Item> */}
+                {adjectiveSets.map(setName => {
+                    return (
+                        <Breadcrumb.Item key={setName} active={cardType === setName}  onClick={() => setCardTypeToView(setName)}>{_.startCase(setName)}</Breadcrumb.Item>
+                    )
+                })}
             </Breadcrumb>
         </div>
         { cardsGuessedCorrect.length !== cards.length ? (

@@ -7,6 +7,8 @@ import * as nounsJson from '../salita/nouns.json';
 export const TagalogContext = createContext();
 
 export const TagalogContextProvider = (props) => {
+    const adjectiveSets = ['adjectiveI', 'adjectiveIa', 'adjectiveII'];
+
     const [adjectives, setAdjectives] = useState([]);
     const [verbs, setVerbs] = useState([]);
     const [nouns, setNouns] = useState([]);
@@ -17,7 +19,7 @@ export const TagalogContextProvider = (props) => {
     }
     const getAdjectives = async () => {
         await stall();
-        let adj = adjectivesJson.default.slice(0,3);
+        let adj = adjectivesJson.default;
         setAdjectives(adj);
     }
 
@@ -70,7 +72,7 @@ export const TagalogContextProvider = (props) => {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <TagalogContext.Provider value={{adjectives, verbs, getAdjectivesBySet, shuffleCards}}>
+        <TagalogContext.Provider value={{adjectives, verbs, getAdjectivesBySet, shuffleCards, adjectiveSets}}>
             {props.children}
         </TagalogContext.Provider>
     )
