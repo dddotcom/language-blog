@@ -24,7 +24,7 @@ export const TagalogContextProvider = (props) => {
     }
 
     const getAdjectivesBySet = (setName) => {
-        return adjectivesJson.default.filter(adj => adj.type === setName).slice(0,3);
+        return adjectivesJson.default.filter(adj => adj.type === setName);
     }
     
     const getVerbs = async () => {
