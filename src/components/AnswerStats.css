@@ -1,0 +1,10 @@
+.add-button {
+    cursor: pointer;
+}
+
+.add-button:hover > span > .badge.badge-danger {
+    background-color: #973a37;
+}
+.add-button:hover > span > .badge.badge-success {
+    background-color: #408040;
+}

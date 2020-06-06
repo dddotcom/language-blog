@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Row, Col } from 'react-bootstrap'
+import { Card, Form, Row, Col, Button } from 'react-bootstrap'
 import './PracticeCard.css'
 import Puto from '../origputo.png'
 import UbePuto from '../ubeputo.png'
@@ -24,6 +24,10 @@ export const PracticeCard = (props) => {
         event.preventDefault();
         event.stopPropagation();
         const form = event.currentTarget;
+
+        if (cardColor === 'success') {
+            return;
+        }
         
         if (cardColor === 'danger') {
             await resetCard(form, 0);
@@ -88,14 +92,16 @@ export const PracticeCard = (props) => {
                             </Col>
                         </Form.Group>                     
                     )}
-                    </Form>
 
-                    { cardColor === 'danger' ? (
-                        <div className="hint-text"><p>Press ENTER to go to next card</p></div>) :(
-                        <div className="hint-text">
-                        <p><span className="give-up">Give up?</span> 
-                        <span className="the-answer">The answer is: {props.translation}</span></p></div>
-                    )}
+                        { cardColor === 'danger' ? (
+                            <div><Button className="next-card" type="submit">Go to next card</Button></div>) :
+                            ( <div className="hint-text">
+                                <p><span className="give-up">Give up?</span> 
+                                <span className="the-answer">The answer is: {props.translation}</span></p>
+                            </div>)
+                        }
+
+                    </Form>                    
 
                 </Card.Body>
             </Card>

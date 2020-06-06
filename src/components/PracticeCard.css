@@ -36,3 +36,16 @@
   position: absolute;
   top: -99999px;
 }
+
+.next-card {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.next-card:hover, .next-card:focus {
+  background-color: rgba(0,0,0,0.25) !important;
+}
+
+.next-card:focus {
+  box-shadow: none !important;
+}
