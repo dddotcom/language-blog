@@ -7,8 +7,8 @@ export const AnswerStats = (props) => {
     const { setMyList } = useContext(MyListContext)
     const [myListSet, setMyListSet] = useState(new Set());
 
-    const addToList = () => {
-        const newMyList = Array.from(myListSet).map(word => ({type: 'mylist', english: word.split('=')[1], tagalog: word.split('=')[0]}))
+    const addToList = (updateListSet) => {
+        const newMyList = Array.from(updateListSet).map(word => ({type: 'myList', english: word.split('=')[1], tagalog: word.split('=')[0]}))
         setMyList(newMyList)
     }
 
@@ -20,6 +20,7 @@ export const AnswerStats = (props) => {
             updateListSet.add(word)
         }
         setMyListSet(updateListSet)
+        addToList(updateListSet);
     }
 
     const addAllToMyList = () => {
@@ -28,6 +29,7 @@ export const AnswerStats = (props) => {
             Object.keys(props.answerStats).forEach(word => updateListSet.add(word));
         } 
         setMyListSet(updateListSet);
+        addToList(updateListSet);
     }
 
     return (
@@ -76,7 +78,7 @@ export const AnswerStats = (props) => {
 
                         </tbody>
                     </Table>
-                    {props.cardType === 'myList' ? (undefined) : (<Button className="mb-1" onClick={addToList}>Add to My List</Button>)}
+                    {/* {props.cardType === 'myList' ? (undefined) : (<Button className="mb-1" onClick={addToList}>Add to My List</Button>)} */}
                 </Col>
             </Row>
         </div>
