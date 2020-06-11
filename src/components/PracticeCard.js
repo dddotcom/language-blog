@@ -67,7 +67,7 @@ export const PracticeCard = (props) => {
         <div className="mt-3 mb-3">
             <Card className="m-auto" bg={cardColor}
             text="white" border="warning"
-            style={{ width: '36rem', height: '24rem' }}>
+            style={{ width: '36rem', height: '27rem' }}>
                 <Card.Header>{props.type}</Card.Header>
                 <Card.Body>
                     { putoFlavor === 'Puto' ? (<span><small>Original!</small><br/><img className="puto-card" src={Puto} alt="masarap na puto original" title="masarap na puto original"/></span>): null }
