@@ -14,9 +14,12 @@ import { MyListContext } from '../contexts/MyListContext';
 // show progress bar?
 // verb conjugation
 // see a list of all words in the app
+// vocab lookup
+// same meaning words
+// grammar
 
 export const VocabPractice = (props) => {
-    const { adjectives, verbs, getAdjectivesBySet, shuffleCards, adjectiveSets } = useContext(TagalogContext)
+    const { adjectives, verbs, nouns, getAdjectivesBySet, shuffleCards, adjectiveSets } = useContext(TagalogContext)
     const { myList } = useContext(MyListContext);
     const [currentCard, setCurrentCard] = useState({});
     const [currentCardIndex, setCurrentCardIndex] = useState(-1);
@@ -74,6 +77,11 @@ export const VocabPractice = (props) => {
                         newCards = _.cloneDeep(verbs);
                     }
                     break;
+                case 'noun': 
+                    if (verbs.length) {
+                        newCards = _.cloneDeep(nouns);
+                    }
+                    break;
                 case 'myList':
                     if (myList.length) {
                         newCards = _.cloneDeep(myList);
@@ -124,11 +132,14 @@ export const VocabPractice = (props) => {
     const vocabPracticeBreadcrumbBar = () => {
         return (
             <div className="text-center practice-menu">
+            <p className="mt-3 mb-3 ml-auto mr-auto p-3 toggle-language" onClick={() => setCardTypeToView('myList')}>
+                My List</p>
             <p className="mt-3 mb-3 ml-auto mr-auto p-3 toggle-language" onClick={() => setViewTagalog(!viewTagalog)}>
                 {viewTagalog ? 'Tagalog -> English' : 'English -> Tagalog'}</p>
             <Breadcrumb className="breadcrumb-style m-auto">
                 <Breadcrumb.Item  active={cardType==='verb'} onClick={() => setCardTypeToView('verb')}>Verbs</Breadcrumb.Item>
-                <Breadcrumb.Item  active={cardType==='myList'} onClick={() => setCardTypeToView('myList')}>My List</Breadcrumb.Item>
+                <Breadcrumb.Item  active={cardType==='noun'} onClick={() => setCardTypeToView('noun')}>Nouns</Breadcrumb.Item>
+                {/* <Breadcrumb.Item  active={cardType==='phrases'} onClick={() => setCardTypeToView('phrases')}>Phrases</Breadcrumb.Item> */}
                 {adjectiveSets.map(setName => {
                     return (
                         <Breadcrumb.Item key={setName} active={cardType === setName}  onClick={() => setCardTypeToView(setName)}>{_.startCase(setName)}</Breadcrumb.Item>
@@ -153,6 +164,7 @@ export const VocabPractice = (props) => {
                             (card.removeFromList || (card.tagalog !== currentCard.tagalog) ) ? (undefined) : (
                                 <PracticeCard key={card.tagalog}  word={viewTagalog ? card.tagalog : card.english} 
                                 translation={viewTagalog ? card.english : card.tagalog}
+                                sentence={viewTagalog && card.tagalogSentence && card.englishSentence ? card.tagalogSentence : card.englishSentence}
                                 updateCurrentCardIndex = {updateCurrentCardIndex}
                                 type={_.startCase(card.type)}/>
                             )

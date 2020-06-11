@@ -76,7 +76,7 @@ export const PracticeCard = (props) => {
                     <Card.Title>
                         <h1>{props.word}</h1>
                     </Card.Title>
-                    {/* <Card.Text>{props.sentence}</Card.Text> */}
+                    <Card.Text>{props.sentence}</Card.Text>
                     <Form onSubmit={handleSubmit}>
                     { cardColor === 'danger' ? (
                         <Form.Group as={Row} controlId="translation">

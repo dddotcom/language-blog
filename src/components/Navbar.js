@@ -13,8 +13,11 @@ const Navbar = () => {
             <NavLink className="nav-link" to="/">Home</NavLink>
         </Nav.Item>
         <Nav.Item>
-            <NavLink className="nav-link" to="/practice">Practice</NavLink>
+            <NavLink className="nav-link" to="/practice">Vocab Practice</NavLink>
         </Nav.Item>
+        {/* <Nav.Item>
+            <NavLink className="nav-link" to="/practice">Verb Conjugation Practice</NavLink>
+        </Nav.Item> */}
         {/* <Nav.Item>
             <NavLink className="nav-link" to="/list">List</NavLink>
         </Nav.Item> */}

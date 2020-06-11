@@ -1,1 +1,11 @@
-[]
+[
+    { "type": "pagkain", "tagalog": "sibuyas", "english": "onion", "tagalogSentence": "", "englishSentence": ""},
+    { "type": "pagkain", "tagalog": "kamatis", "english": "tomato", "tagalogSentence": "", "englishSentence": ""},
+    { "type": "pagkain", "tagalog": "bawang", "english": "garlic", "tagalogSentence": "", "englishSentence": ""},
+    { "type": "pagkain", "tagalog": "mani", "english": "peanut", "tagalogSentence": "", "englishSentence": ""},
+    { "type": "gamit", "tagalog": "gamit", "english": "thing", "tagalogSentence": "", "englishSentence": ""},
+    { "type": "gamit", "tagalog": "damit", "english": "clothing", "tagalogSentence": "", "englishSentence": ""},
+    { "type": "tanong", "tagalog": "palagay", "english": "thought", "tagalogSentence": "Ano ang palagay mo?", "englishSentence": "What do you think?"},
+    { "type": "tanong", "tagalog": "handa", "english": "ready", "tagalogSentence": "Handa ka na ba?", "englishSentence": "Are you ready?"},
+    { "type": "tanong", "tagalog": "kailan", "english": "when", "tagalogSentence": "", "englishSentence": ""}
+]

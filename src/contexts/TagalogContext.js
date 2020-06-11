@@ -72,7 +72,7 @@ export const TagalogContextProvider = (props) => {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <TagalogContext.Provider value={{adjectives, verbs, getAdjectivesBySet, shuffleCards, adjectiveSets}}>
+        <TagalogContext.Provider value={{adjectives, verbs, nouns, getAdjectivesBySet, shuffleCards, adjectiveSets}}>
             {props.children}
         </TagalogContext.Provider>
     )
