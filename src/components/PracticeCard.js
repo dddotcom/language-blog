@@ -43,7 +43,13 @@ export const PracticeCard = (props) => {
             return;
         }
 
-        if (userTranslation.toLowerCase() === props.translation) {
+        if (props.translation.split(",").length > 1) {
+            if (props.translation.split(",").includes(userTranslation.toLowerCase()));
+            setCardColor("success");
+            await resetCard(form);
+            randomPuto();
+            props.updateCurrentCardIndex(true);
+        } else if (userTranslation.toLowerCase() === props.translation) {
             setCardColor("success");
             await resetCard(form);
             randomPuto();

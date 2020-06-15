@@ -18,9 +18,9 @@ const Navbar = () => {
         {/* <Nav.Item>
             <NavLink className="nav-link" to="/practice">Verb Conjugation Practice</NavLink>
         </Nav.Item> */}
-        {/* <Nav.Item>
+        <Nav.Item>
             <NavLink className="nav-link" to="/list">List</NavLink>
-        </Nav.Item> */}
+        </Nav.Item>
         </Nav>
     )
 }
